@@ -1,0 +1,25 @@
+language: python
+sudo: false
+
+python:
+  - "2.7"
+  - "3.5"
+  - "3.6"
+  - "3.7"
+
+branches:
+  only:
+    - master
+    - develop
+
+install:
+  - [ -e "requirements_dev.txt" ] && echo "No dev dependencies to install" || pip install -r requirements_dev.txt
+  - [ -e "requirements.txt" ] && echo "No dependencies to install" || pip install -r requirements.txt
+
+script:
+  - nose
+  - coverage run
+
+after_success:
+  - coverage report
+  - coveralls
